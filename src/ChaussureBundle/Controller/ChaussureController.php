@@ -126,6 +126,16 @@ class ChaussureController extends Controller
         if(!$session->has('panier')) $session->set('panier', array());
         $em = $this->getDoctrine()->getManager();
         $produits = $em->getRepository('ChaussureBundle:Chaussure')->findArray(array_keys($session->get('panier')));
+
+    //ici le mail de validation
+        $message =  \Swift_Message::newInstance()
+                    ->setSubject('Validation de votre commande')
+                    ->setFrom(array('Gehjaniaina@gmail.com' => 'Gehja'))//mandefa
+                    ->setTo(array('Gehjaniaina@gmail.com' => 'Erick'))//andefasana
+                    ->setCharset('utf-8')
+                    ->setContentType('text/html')
+                    ->setBody($this->renderView('@Chaussure/Chaussure/validation.html.twig'));
+        $this->get('mailer')->send($message);
     
         return $this->render('@AcmeUser/Default/panier.html.twig', array('produit'=>$produits,
                                                                             'panier'=>$session->get('panier')));
@@ -149,7 +159,7 @@ class ChaussureController extends Controller
                 'Content-Type'          => 'application/pdf',
                 'Content-Disposition'   => 'attachment; filename="facture.pdf"',
                 'orientation' => 'landscape',
-                'encoding' => 'utf-8',
+                'encoding' => 'UTF-8',
                 'images' => true,
 
             )

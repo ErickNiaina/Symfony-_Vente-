@@ -79,6 +79,7 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
+    encryption: '%mailer_encryption%'
     host: '%mailer_host%'
     username: '%mailer_user%'
     password: '%mailer_password%'
@@ -107,6 +108,7 @@ knp_snappy:
        enabled:    true
        binary:     '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"'
        options: []
+           
 
     image:
        enabled:    true
